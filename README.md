@@ -5,7 +5,6 @@ Aplicativo de Monitoramento Climático desenvolvido com Ionic e Angular, integra
 ## Descrição do Projeto
 
 Este projeto consiste no desenvolvimento de um app para dispositivos móveis, permitindo que o usuário consulte informações climáticas, faça buscas por cidades, visualize previsões e receba notificações sobre mudanças significativas.
-Aqui está o texto reorganizado e formatado corretamente para um `README.md`:
 
 ---
 
