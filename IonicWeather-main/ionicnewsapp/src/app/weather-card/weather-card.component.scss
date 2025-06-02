@@ -1,0 +1,42 @@
+ion-card {
+	display: flex;
+}
+
+aside {
+	line-height: 0;
+	font-size: 3rem;
+	margin-block: auto;
+	padding-left: 0.5rem;
+}
+
+.wrapper {
+	text-align: start;
+	width: 100%;
+}
+
+header {
+	display: flex;
+}
+
+header ion-icon {
+	margin: 0.5rem 0.5rem auto auto;
+	font-size: 1.5rem;
+}
+
+ion-card-content {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.info-badge {
+	display: flex;
+	align-items: center;
+}
+
+.info-badge ion-icon {
+	font-size: 1rem;
+}
+
+.star-full {
+	color: #faf86b;
+}

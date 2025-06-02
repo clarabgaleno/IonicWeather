@@ -1,0 +1,92 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-icon name="sunny-outline" slot="start" style="margin-right: 8px;"></ion-icon>
+      Clima e Local
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header class="card-header">
+      <ion-card-title>Insira a localização</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>  
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label position="floating" class="floating-label">Latitude</ion-label>
+          <ion-input type="number" placeholder="Inserir..." [value]="latitude" (ionChange)="setLatitude($event.target.value)"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating" class="floating-label">Longitude</ion-label>
+          <ion-input type="number" placeholder="Inserir..." [value]="longitude" (ionChange)="setLongitude($event.target.value)"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="secondary" (click)="setLocationWithGPS()">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              Meu Local
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" color="primary" (click)="searchWeathers()">
+              <ion-icon name="search-outline" slot="start"></ion-icon>
+              Pesquisar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item *ngFor="let weather of weathers">
+      <app-weather-card [weather]="weather"></app-weather-card>
+    </ion-item>
+  </ion-list> 
+</ion-content>
+
+<style>
+  ion-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .card-header {
+    background-color: #000000;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .floating-label {
+    padding: 0 6px;
+    left: 12px;
+    width: auto;
+    z-index: 1;
+  }
+
+  ion-input {
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  ion-item {
+    margin-bottom: 12px;
+  }
+
+  ion-button {
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  ion-list {
+    margin-top: 16px;
+  }
+</style>

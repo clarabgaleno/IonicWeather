@@ -1,0 +1,190 @@
+<ng-template #unavailable>Indisp.</ng-template>
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <div class="ion-activatable ripple-parent back-btn" (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+      <ion-title>Detalhes da Região</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="weather-details-content">
+  <ion-card class="main-card">
+    <div class="favorite-row">
+      <ion-icon [name]="isFavorited ? 'star' : 'star-outline'" (click)="favoriteCard()"
+        [ngClass]="isFavorited ? 'star-full' : ''" id="fav-icon"></ion-icon>
+    </div>
+    <ion-card-header>
+      <div class="location-row">
+        <ion-icon name="location-outline" color="primary"></ion-icon>
+        <ion-card-title>{{ weather.name }}</ion-card-title>
+      </div>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="info-badges-row">
+        <div class="info-badge weather-status">
+          <div [ngSwitch]="getWeatherIcon(weatherCode)" id="weather-status-icon">
+            <ion-icon name="sunny-outline" *ngSwitchCase="0"></ion-icon>
+            <ion-icon name="cloudy-outline" *ngSwitchCase="1"></ion-icon>
+            <ion-icon name="rainy-outline" *ngSwitchCase="2"></ion-icon>
+            <ion-icon name="thunderstorm-outline" *ngSwitchCase="3"></ion-icon>
+            <ion-icon name="snow-outline" *ngSwitchCase="4"></ion-icon>
+            <ion-icon name="help-outline" *ngSwitchDefault></ion-icon>
+          </div>
+          <p>{{ weatherStatus }}</p>
+        </div>
+        <div class="info-badge">
+          <ion-icon name="thermometer-outline"></ion-icon>
+          <p *ngIf="temperature !== null; else unavailable">{{ temperature }}°C</p>
+        </div>
+        <div class="info-badge">
+          <ion-icon name="water-outline"></ion-icon>
+          <p *ngIf="humidity !== null; else unavailable">{{ humidity }}%</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="history-card">
+    <ion-card-header>
+      <div id="history-card-header">
+        <ion-icon name="thermometer-outline" color="primary"></ion-icon>
+        <ion-card-title>Previsão Diária</ion-card-title>
+      </div>
+      <div id="history-card-date-selector">
+        <div class="ion-activatable ripple-parent" (click)="decreaseSelectedDate()">
+          <ion-icon name="caret-back" [ngClass]="canSelectPrev ? '' : 'icon-disabled'"></ion-icon>
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+        <ion-card-subtitle>{{ selectedDateLabel }}</ion-card-subtitle>
+        <div class="ion-activatable ripple-parent" (click)="increaseSelectedDate()">
+          <ion-icon name="caret-forward" [ngClass]="canSelectNext ? '' : 'icon-disabled'"></ion-icon>
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+      </div>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="hourly-list">
+        <div class="hourly-data" *ngFor="let data of currentDateWeatherData">
+          <div class="hour-label">{{ data.time }}</div>
+          <div class="hourly-info-row">
+            <div class="info-badge">
+              <ion-icon name="thermometer-outline"></ion-icon>
+              <p *ngIf="data.temperature !== null; else unavailable">{{ data.temperature }}°C</p>
+            </div>
+            <span class="dot-separator">・</span>
+            <div class="info-badge">
+              <ion-icon name="water-outline"></ion-icon>
+              <p *ngIf="data.humidity !== null; else unavailable">{{ data.humidity }}%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<style>
+.weather-details-content {
+  --background: #000000;
+}
+.header {
+  display: flex;
+  align-items: center;
+}
+.back-btn {
+  margin-right: 12px;
+  cursor: pointer;
+}
+.main-card {
+  margin-top: 16px;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #0001;
+  position: relative;
+}
+.favorite-row {
+  position: absolute;
+  align-items: center;
+
+  top: 5px;
+  right: 16px;
+  z-index: 2;
+}
+#fav-icon.star-full {
+  color: #ffd700;
+}
+.location-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-badges-row {
+  display: flex;
+  gap: 18px;
+  margin-top: 12px;
+}
+.info-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #eaf1fb;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 15px;
+}
+.weather-status {
+  background: #eaf1fb;
+}
+.history-card {
+  margin-top: 24px;
+  border-radius: 18px;
+}
+#history-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#history-card-date-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.icon-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.hourly-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.hourly-data {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #313131;
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+.hour-label {
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+}
+.hourly-info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dot-separator {
+  color: #b0b0b0;
+  font-size: 18px;
+}
+</style>

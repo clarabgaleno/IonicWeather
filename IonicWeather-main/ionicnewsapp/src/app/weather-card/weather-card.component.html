@@ -1,0 +1,116 @@
+<ion-card (click)="goToDetails()">
+
+  <ng-template #unavailable>Indisp.</ng-template>
+
+  <div class="wrapper">
+    <header class="card-header">
+      <div class="title-icon">
+        <!-- Ícone do clima à esquerda -->
+        <div class="weather-icon">
+          <ng-container [ngSwitch]="getWeatherIcon(weatherCode)">
+            <ion-icon name="sunny-outline" color="primary" *ngSwitchCase="0"></ion-icon>
+            <ion-icon name="cloudy-outline" color="primary" *ngSwitchCase="1"></ion-icon>
+            <ion-icon name="rainy-outline" color="primary" *ngSwitchCase="2"></ion-icon>
+            <ion-icon name="thunderstorm-outline" color="primary" *ngSwitchCase="3"></ion-icon>
+            <ion-icon name="snow-outline" color="primary" *ngSwitchCase="4"></ion-icon>
+            <ion-icon name="help-outline" color="primary" *ngSwitchDefault></ion-icon>
+          </ng-container>
+        </div>
+
+        <div class="text-wrapper">
+          <ion-card-header>
+            <ion-card-title *ngIf="weatherStatus !== null; else unavailable">
+              {{ cityName }}
+            </ion-card-title>
+            <ion-card-subtitle *ngIf="weatherStatus !== null; else unavailable">
+              {{ weatherStatus }}
+            </ion-card-subtitle>
+          </ion-card-header>
+        </div>
+      </div>
+
+      <ion-icon 
+        [name]="isFavorited ? 'star' : 'star-outline'" 
+        (click)="favoriteCard($event)" 
+        [ngClass]="isFavorited ? 'star-full' : ''"
+        class="favorite-icon" />
+    </header>
+
+    <ion-card-content class="card-content">
+      <div class="info-badge">
+        <ion-icon name="thermometer-outline"></ion-icon>
+        <p *ngIf="temperature !== null; else unavailable">{{ temperature }}°C</p>
+      </div>
+      <p class="dot-separator">・</p>
+      <div class="info-badge">
+        <ion-icon name="water-outline"></ion-icon>
+        <p *ngIf="humidity !== null; else unavailable">{{ humidity }}%</p>
+      </div>
+    </ion-card-content>
+  </div>
+
+</ion-card>
+
+
+<style>
+  .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.card-header {
+  background-color: #000000;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 16px;
+  text-align: left;
+}
+
+.title-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weather-icon ion-icon {
+  font-size: 24px;
+}
+
+.text-wrapper {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.favorite-icon {
+  font-size: 24px;
+  color: #FFD700;
+}
+
+.star-full {
+  color: #FFD700 !important;
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.info-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  background-color: #f1f1f1;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.dot-separator {
+  font-size: 18px;
+  margin: 0 4px;
+}
+</style>
