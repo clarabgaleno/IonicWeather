@@ -33,10 +33,10 @@ ionic serve
 
 ## Autores
 
-Carla Valéria
-Clara Galeno
-Danilo Oliveira
-Gabriel Ferraz
-Luiz Felipe Rodrigues
-Nathan Silva
-Thalles Araújo
+* Carla Valéria
+* Clara Galeno
+* Danilo Oliveira
+* Gabriel Ferraz
+* Luiz Felipe Rodrigues
+* Nathan Silva
+* Thalles Araújo
